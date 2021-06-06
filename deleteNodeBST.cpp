@@ -12,20 +12,22 @@ Solution :
 Search the left subtree and the right subtree
 if the node is the leaf node i.e it doesn't have any child, just delete it and return NULL
 if the node has left or right child, delete node and return the left or right child.
-if the node has both left and right child, find the min of the left subtree and replace it with current node val and call the delete for the max.
+if the node has both left and right child, find the min of the right subtree and replace it with current node val and call the delete for the max.
 */
+#include<iostream>
+using namespace std;
 
 struct TreeNode {
     int val;
     TreeNode *left;
     TreeNode *right;
-    TreeNode() : val(0), left(NULL), right(NULL) {}
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
 int min(TreeNode *root) {
-    if ( root->left == NULL ) return root->key;
+    if ( root->left == nullptr) return root->val;
     return min(root->left);
 }
 
@@ -39,8 +41,8 @@ int min(TreeNode *root) {
             if(root->left != nullptr && root->right != nullptr) {
                 //Find the min of right subtree
                 int min1 = min(root->right);
-                root->right = deleteNode(root->right, max1);
-                root->val=max1;
+                root->right = deleteNode(root->right, min1);
+                root->val=min1;
                 return root;
             }
             else if (root->left != nullptr && root->right == nullptr) {
@@ -60,3 +62,7 @@ int min(TreeNode *root) {
         }
         return root;
     }
+
+int main() {
+   return 0;
+}
